@@ -1,0 +1,53 @@
+{
+  "name": "e-commerce-api",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/e-commerce-api/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nx/webpack:webpack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "target": "node",
+        "compiler": "tsc",
+        "outputPath": "dist/apps/e-commerce-api",
+        "main": "apps/e-commerce-api/src/main.ts",
+        "tsConfig": "apps/e-commerce-api/tsconfig.app.json",
+        "assets": ["apps/e-commerce-api/src/assets"],
+        "webpackConfig": "apps/e-commerce-api/webpack.config.js"
+      },
+      "configurations": {
+        "development": {},
+        "production": {}
+      }
+    },
+    "serve": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "e-commerce-api:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "e-commerce-api:build:development"
+        },
+        "production": {
+          "buildTarget": "e-commerce-api:build:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "apps/e-commerce-api/jest.config.ts"
+      }
+    }
+  },
+  "tags": []
+}
